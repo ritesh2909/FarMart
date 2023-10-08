@@ -2,6 +2,7 @@ import express, { json } from "express";
 import { config } from "dotenv";
 import cookieParser from "cookie-parser";
 import { connect } from "mongoose";
+import mongoose from "mongoose";
 import { v2 as cloudinary } from "cloudinary";
 import authRoute from "./routes/auth.js";
 import uploadRoute from "./routes/upload.js";
