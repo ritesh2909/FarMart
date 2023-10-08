@@ -88,3 +88,4 @@ export async function logoutUser(req, res) {
     return res.status(500).json(error);
   }
 }
+
