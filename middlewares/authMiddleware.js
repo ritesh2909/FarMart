@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 
+
 const verifyToken = async (req, res, next) => {
   if (!req.headers.authorization) {
     return res.status(401).json("Unauthenticated!");
