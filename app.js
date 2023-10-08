@@ -1,0 +1,47 @@
+import express, { json } from "express";
+import { config } from "dotenv";
+import cookieParser from "cookie-parser";
+import { connect } from "mongoose";
+import { v2 as cloudinary } from "cloudinary";
+import authRoute from "./routes/auth.js";
+import uploadRoute from "./routes/upload.js";
+import cron from "node-cron";
+import Upload from "./models/Upload.js";
+import cors from "cors";
+
+const app = express();
+config();
+app.use(json());
+app.use(cookieParser());
+app.use(cors());
+// Configure Cloudinary
+try {
+  cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_KEY,
+    api_secret: process.env.CLOUD_SECRET,
+  });
+} catch (error) {
+  console.log("Error in creds");
+  console.log(error);
+}
+
+// DB Connection
+connect(process.env.MONGO_URL).then(() => {
+  console.log("DB Connected!");
+});
+
+app.use("/api/auth", authRoute);
+app.use("/api/upload", uploadRoute);
+
+cron.schedule("0 0 * * *", async () => {
+  const threeDaysAgo = new Date();
+  threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+
+  await Upload.deleteMany({ createdAt: { $lt: threeDaysAgo } });
+  console.log("Cron Jobs will delete Uploads after every 3 Days!");
+});
+
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on http://localhost:${process.env.PORT}`);
+});
