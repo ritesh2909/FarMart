@@ -51,7 +51,7 @@ cron.schedule("0 0 * * *", async () => {
 });
 
 connectDB().then(() => {
-    app.listen(PORT, () => {
+    app.listen(process.env.PORT, () => {
         console.log("listening for requests");
     })
 })
