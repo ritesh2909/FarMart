@@ -10,5 +10,6 @@ const uploadSchema = Schema(
   { timestamps: true }
 );
 
+
 const Upload = model("Upload", uploadSchema);
 export default Upload;
