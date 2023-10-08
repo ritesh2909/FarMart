@@ -27,9 +27,16 @@ try {
 }
 
 // DB Connection
-connect(process.env.MONGO_URL).then(() => {
-  console.log("DB Connected!");
-});
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URL);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
+
 
 app.use("/api/auth", authRoute);
 app.use("/api/upload", uploadRoute);
@@ -42,6 +49,9 @@ cron.schedule("0 0 * * *", async () => {
   console.log("Cron Jobs will delete Uploads after every 3 Days!");
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running on http://localhost:${process.env.PORT}`);
-});
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log("listening for requests");
+    })
+})
+
