@@ -15,7 +15,7 @@ export async function uploadNewFile(req, res) {
 
   // Upload the image to Cloudinary
   cloudinary.uploader
-    .upload_stream({ resource_type: "image" }, (error, result) => {
+    .upload_stream({ resource_type: "auto" }, (error, result) => {
       if (error) {
         console.error(error);
         return res
