@@ -30,6 +30,16 @@ export async function registerUser(req, res) {
   }
 }
 
+export async function getUsers(req,res){
+  try{
+    const users = await User.find({});
+    return res.status(200).json(users);
+  }
+    catch(err){
+      console.log(err);
+    }
+}
+
 export async function loginUser(req, res) {
   const email = req.body.email;
   const user = await User.findOne({ email: email });
