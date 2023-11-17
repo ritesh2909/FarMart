@@ -42,13 +42,14 @@ const connectDB = async () => {
 app.use("/api/auth", authRoute);
 app.use("/api/upload", uploadRoute);
 
-cron.schedule("0 0 * * *", async () => {
-  const threeDaysAgo = new Date();
-  threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
 
-  await Upload.deleteMany({ createdAt: { $lt: threeDaysAgo } });
-  console.log("Cron Jobs will delete Uploads after every 3 Days!");
-});
+// cron.schedule("/cron-jobs", async () => {
+//   const threeDaysAgo = new Date();
+//   threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+
+//   await Upload.deleteMany({ createdAt: { $lt: threeDaysAgo } });
+//   console.log("Cron Jobs will delete Uploads after every 3 Days!");
+// });
 
 connectDB().then(() => {
     app.listen(process.env.PORT, () => {
