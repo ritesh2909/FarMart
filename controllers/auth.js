@@ -48,7 +48,7 @@ export async function loginUser(req, res) {
   console.log(user);
     const token = generateToken("123");
     await User.findByIdAndUpdate(
-      (user?._id).toString(),
+      (user._id).toString(),
       {
         accessToken: token,
       },
