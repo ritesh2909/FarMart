@@ -65,3 +65,12 @@ export async function getAllUploads(req, res) {
     return res.status(500).json(error);
   }
 }
+export async function getAllUploadsV2(req,res){
+  try{
+    const uploads = await Upload.find({});
+    return res.status(200).json(uploads);
+  }
+  catch(err){
+    console.log(err);
+  }
+}
