@@ -45,8 +45,8 @@ export async function loginUser(req, res) {
     if (!isValid) {
       return res.status(401).json("Invalid Credentials!!");
     }
-
-    const token = generateToken(user?._id);
+  console.log(user);
+    const token = generateToken("123");
     await User.findByIdAndUpdate(
       (user?._id).toString(),
       {
